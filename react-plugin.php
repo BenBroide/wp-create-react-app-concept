@@ -21,7 +21,9 @@ define('RP_MANIFEST_URL', RP_REACT_APP_BUILD . 'asset-manifest.json');
  *
  */
 function rp_load_plugin(){
+	// Loading the app in WordPress admin main screen.
 	new RpLoadReactApp('admin_enqueue_scripts', 'index.php', false,'#wpbody .wrap');
+	// Loading the app WordPress front end page.
 	new RpLoadReactApp( 'wp_enqueue_scripts', 'index.php', 'is_front_page', '#site-footer');
 }
 
