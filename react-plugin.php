@@ -1,0 +1,86 @@
+<?php
+/**
+ * Plugin Name:     WordPress React Create App
+ * Description:     Load React app in WorePress Admin concept
+ * Author:          Ben Broide
+ * Text Domain:     react-plugin
+ * Domain Path:     /languages
+ * Version:         0.1.0
+ *
+ * @package         React_Plugin
+ */
+
+/**
+ * Load react app files in WordPress admin.
+ *
+ * @return bool|void
+ */
+function rp_load_react_app($hook){
+	var_dump($hook);
+	$is_main_dashboard = $hook === 'index.php';
+
+	// Only load react app scripts in main admin page.
+	if( !$is_main_dashboard)
+		return;
+
+	// Setting path variables.
+	$plugin_dir_url =plugin_dir_url( __FILE__ ) . 'react-app/';
+	$react_app_build = $plugin_dir_url .'build/';
+	$manifest_url = $react_app_build. 'asset-manifest.json';
+
+	// Request manifest file.
+	$request = file_get_contents( $manifest_url );
+
+	// If the remote request fails, wp_remote_get() will return a WP_Error, so let’s check if the $request variable is an error:
+	if( is_wp_error( $request ) )
+		return false;
+
+	// Convert json to php array.
+	$files_data = json_decode($request);
+	if($files_data === null)
+		return ;
+
+	if(!property_exists($files_data,'entrypoints'))
+		return false;
+
+	// Get assets links.
+	$assets_files = $files_data->entrypoints;
+
+	$js_files = array_filter($assets_files,'rp_filter_js_files');
+	$css_files = array_filter($assets_files,'rp_filter_css_files');
+
+	// Load css files
+	foreach ($css_files as $index => $css_file){
+		wp_enqueue_style('react-plugin-'.$index, $react_app_build . $css_file);
+	}
+
+	// Load js files
+	foreach ($js_files as $index => $js_file){
+		wp_enqueue_script('react-plugin-'.$index, $react_app_build . $js_file, array(), 1, true);
+	}
+}
+
+// Setting hook to load files.
+add_action('admin_enqueue_scripts','rp_load_react_app');
+
+/**
+ * Get js files from assets array.
+ *
+ * @param array $file_string
+ *
+ * @return bool
+ */
+function rp_filter_js_files ($file_string){
+  return pathinfo($file_string, PATHINFO_EXTENSION) === 'js';
+}
+
+/**
+ * Get css files from assets array.
+ *
+ * @param array $file_string
+ *
+ * @return bool
+ */
+function rp_filter_css_files ($file_string) {
+	return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css';
+}
