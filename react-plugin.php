@@ -16,7 +16,7 @@
  * @return bool|void
  */
 function rp_load_react_app($hook){
-	var_dump($hook);
+	
 	$is_main_dashboard = $hook === 'index.php';
 
 	// Only load react app scripts in main admin page.
