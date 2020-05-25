@@ -18,7 +18,7 @@ define('RP_REACT_APP_BUILD', RP_PLUGIN_DIR_URL . 'build/');
 define('RP_MANIFEST_URL', RP_REACT_APP_BUILD . 'asset-manifest.json');
 
 /**
- *
+ * Calling the plugin class with parameters.
  */
 function rp_load_plugin(){
 	// Loading the app in WordPress admin main screen.
@@ -29,6 +29,10 @@ function rp_load_plugin(){
 
 add_action('init','rp_load_plugin');
 
+
+/**
+ * Class RpLoadReactApp.
+ */
 class RpLoadReactApp {
 
 	/**
@@ -68,30 +72,21 @@ class RpLoadReactApp {
 	 * @return bool|void
 	 */
 	function load_react_app( $hook ) {
-
-		$is_main_dashboard = $hook === $this->limit_load_hook;
-
 		// Limit app load in admin by admin page hook.
+		$is_main_dashboard = $hook === $this->limit_load_hook;
 		if ( ! $is_main_dashboard && is_bool($this->limit_callback))
 			return;
 
 		// Limit app load in front end by callback.
 		$limit_callback = $this->limit_callback;
-
 		if(is_string($limit_callback) && !$limit_callback()  )
 			return;
-
 
 		// Get assets links.
 		$assets_files = $this->get_assets_files();
 
-		$js_files  = array_filter( $assets_files,  function($file_string) {
-			return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'js';
-		});
-
-		$css_files = array_filter( $assets_files,  function($file_string) {
-			return pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css';
-		});
+		$js_files  = array_filter( $assets_files,  fn($file_string) => pathinfo( $file_string, PATHINFO_EXTENSION ) === 'js');
+		$css_files  = array_filter( $assets_files,  fn($file_string) => pathinfo( $file_string, PATHINFO_EXTENSION ) === 'css');
 
 		// Load css files.
 		foreach ( $css_files as $index => $css_file ) {
@@ -110,7 +105,7 @@ class RpLoadReactApp {
 	}
 
 	/**
-	 * Get app assets files.
+	 * Get app entry points assets files.
 	 *
 	 * @return bool|void
 	 */
@@ -118,7 +113,7 @@ class RpLoadReactApp {
 		// Request manifest file.
 		$request = file_get_contents( RP_MANIFEST_URL );
 
-		// If the remote request fails return.
+		// If the remote request fails.
 		if ( !$request  )
 			return false;
 
@@ -127,6 +122,7 @@ class RpLoadReactApp {
 		if ( $files_data === null )
 			return;
 
+		// No entry points found.
 		if ( ! property_exists( $files_data, 'entrypoints' ) )
 			return false;
 
