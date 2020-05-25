@@ -16,7 +16,7 @@
  * @return bool|void
  */
 function rp_load_react_app($hook){
-	
+
 	$is_main_dashboard = $hook === 'index.php';
 
 	// Only load react app scripts in main admin page.
@@ -58,6 +58,11 @@ function rp_load_react_app($hook){
 	foreach ($js_files as $index => $js_file){
 		wp_enqueue_script('react-plugin-'.$index, $react_app_build . $js_file, array(), 1, true);
 	}
+
+	// Variables for app use
+	wp_localize_script('react-plugin-0', 'rpReactPlugin',
+		array('appSelector' => '#wpbody .wrap')
+	);
 }
 
 // Setting hook to load files.
