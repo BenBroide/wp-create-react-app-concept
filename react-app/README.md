@@ -15,7 +15,7 @@ Terminal - WP Cli
 
 ## Available React Create App Scripts
 
-In the project directory, you can run in react-plugin/react-app folder:
+Run in react-plugin/react-app folder:
 
 ### `yarn start`
 
