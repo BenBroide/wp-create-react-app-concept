@@ -10,6 +10,10 @@
  * @package         React_Plugin
  */
 
+
+// Setting hook to load files.
+add_action('admin_enqueue_scripts','rp_load_react_app');
+
 /**
  * Load react app files in WordPress admin.
  *
@@ -32,7 +36,7 @@ function rp_load_react_app($hook){
 	$request = file_get_contents( $manifest_url );
 
 	// If the remote request fails, wp_remote_get() will return a WP_Error, so let’s check if the $request variable is an error:
-	if( is_wp_error( $request ) )
+	if( !$request )
 		return false;
 
 	// Convert json to php array.
@@ -64,9 +68,6 @@ function rp_load_react_app($hook){
 		array('appSelector' => '#wpbody .wrap')
 	);
 }
-
-// Setting hook to load files.
-add_action('admin_enqueue_scripts','rp_load_react_app');
 
 /**
  * Get js files from assets array.
