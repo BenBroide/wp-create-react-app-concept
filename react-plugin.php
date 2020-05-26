@@ -12,7 +12,7 @@
 
 
 // Setting hook to load files.
-add_action('admin_enqueue_scripts','rp_load_react_app');
+add_action('wp_enqueue_scripts','rp_load_react_app');
 
 /**
  * Load react app files in WordPress admin.
@@ -20,11 +20,8 @@ add_action('admin_enqueue_scripts','rp_load_react_app');
  * @return bool|void
  */
 function rp_load_react_app($hook){
-
-	$is_main_dashboard = $hook === 'index.php';
-
-	// Only load react app scripts in main admin page.
-	if( !$is_main_dashboard)
+	// Only load react app scripts in site front end home page.
+	if( !is_front_page())
 		return;
 
 	// Setting path variables.
@@ -65,7 +62,7 @@ function rp_load_react_app($hook){
 
 	// Variables for app use.
 	wp_localize_script('react-plugin-0', 'rpReactPlugin',
-		array('appSelector' => '#wpbody .wrap')
+		array('appSelector' => '#site-footer')
 	);
 }
 
