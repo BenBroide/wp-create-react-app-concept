@@ -32,7 +32,7 @@ function rp_load_react_app($hook){
 	// Request manifest file.
 	$request = file_get_contents( $manifest_url );
 
-	// If the remote request fails, wp_remote_get() will return a WP_Error, so let’s check if the $request variable is an error:
+	// If the remote request fails, return.
 	if( !$request )
 		return false;
 
