@@ -53,17 +53,17 @@ function rp_load_react_app($hook){
 	$js_files = array_filter($assets_files,'rp_filter_js_files');
 	$css_files = array_filter($assets_files,'rp_filter_css_files');
 
-	// Load css files
+	// Load css files.
 	foreach ($css_files as $index => $css_file){
 		wp_enqueue_style('react-plugin-'.$index, $react_app_build . $css_file);
 	}
 
-	// Load js files
+	// Load js files.
 	foreach ($js_files as $index => $js_file){
 		wp_enqueue_script('react-plugin-'.$index, $react_app_build . $js_file, array(), 1, true);
 	}
 
-	// Variables for app use
+	// Variables for app use.
 	wp_localize_script('react-plugin-0', 'rpReactPlugin',
 		array('appSelector' => '#wpbody .wrap')
 	);
