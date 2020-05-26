@@ -24,8 +24,8 @@ function rp_load_react_app($hook){
 		return;
 
 	// Setting path variables.
-	$plugin_dir_url =plugin_dir_url( __FILE__ ) . 'react-app/';
-	$react_app_build = $plugin_dir_url .'build/';
+	$plugin_app_dir_url =plugin_dir_url( __FILE__ ) . 'react-app/';
+	$react_app_build = $plugin_app_dir_url .'build/';
 	$manifest_url = $react_app_build. 'asset-manifest.json';
 
 	// Request manifest file.
