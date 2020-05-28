@@ -24,7 +24,7 @@ function rp_load_plugin(){
 	// Loading the app in WordPress admin main screen.
 	new RpLoadReactApp('admin_enqueue_scripts', 'index.php', false,'#wpbody .wrap');
 	// Loading the app WordPress front end page.
-	new RpLoadReactApp( 'wp_enqueue_scripts', 'index.php', 'is_front_page', '#site-footer');
+	new RpLoadReactApp( 'wp_enqueue_scripts', '', 'is_front_page', '#site-footer');
 }
 
 add_action('init','rp_load_plugin');
@@ -52,8 +52,8 @@ class RpLoadReactApp {
 	 * RpLoadReactApp constructor.
 	 *
 	 * @param string $enqueue_hook Hook to enqueue scripts.
-	 * @param string $limit_load_hook Limit load to hook in admin load.
-	 * @param bool|string $limit_callback Limit load by callback result.
+	 * @param string $limit_load_hook Limit load to hook in admin load. If front end pass empty string.
+	 * @param bool|string $limit_callback Limit load by callback result. If back end send false.
 	 * @param string $css_selector Css selector to render app.
 	 */
 	function __construct( $enqueue_hook, $limit_load_hook,$limit_callback = false, $css_selector)  {
