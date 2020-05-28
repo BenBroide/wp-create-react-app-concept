@@ -1,5 +1,5 @@
 {
-  "homepage": "/wp-content/plugins/react-plugin/react-app/build",
+  "homepage": "/wp-content/plugins/wp-create-react-app-concept/react-app/build",
   "name": "react-app",
   "version": "0.1.0",
   "private": true,
