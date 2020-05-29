@@ -10,7 +10,7 @@ UI - WordPress Admin:
 Terminal - WP Cli
 1. `cd wp-content/plugins`
 2. `git clone git@github.com:BenBroide/create-react-app-wp-admin.git`
-3. `wp plugin activate react-plugin`
+3. `wp plugin activate p plugin activate wp-create-react-app-concept`
 
 
 ## Available React Create App Scripts
