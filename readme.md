@@ -11,6 +11,9 @@ Terminal - WP Cli
 1. `cd wp-content/plugins`
 2. `git@github.com:BenBroide/wp-create-react-app-concept.git`
 3. `wp plugin activate wp-create-react-app-concept`
+4. `cd wp-create-react-app-concept/react-app`
+5. `yarn`
+6. `yarn build`
 
 
 ## Available React Create App Scripts
